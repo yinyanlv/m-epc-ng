@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import {JsBridgeService} from './services/js-bridge.service';
 import {ComponentsModule} from './modules/components.module';
 import {ListComponent} from './pages/list/list.component';
 import {DetailComponent} from './pages/detail/detail.component';
@@ -20,7 +21,9 @@ import {DetailComponent} from './pages/detail/detail.component';
     AppRoutingModule,
     ComponentsModule
   ],
-  providers: [],
+  providers: [
+    JsBridgeService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

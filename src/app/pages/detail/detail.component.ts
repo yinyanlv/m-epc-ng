@@ -1,6 +1,7 @@
-import { Component, AfterViewInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit, AfterViewInit, ViewChild} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
+import {JsBridgeService} from '../../services/js-bridge.service';
 import {list} from '../../../../mock/list';
 import {SvgHotpointComponent} from '../../components/svg-hotpoint/svg-hotpoint.component';
 
@@ -9,22 +10,37 @@ import {SvgHotpointComponent} from '../../components/svg-hotpoint/svg-hotpoint.c
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss']
 })
-export class DetailComponent implements AfterViewInit {
+export class DetailComponent implements OnInit, AfterViewInit {
 
   @ViewChild('svgHotPoint', {static: false})
   private _svgHotPoint: SvgHotpointComponent;
 
+  public item: any;
+
   constructor(
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _jsBridge: JsBridgeService
   ) {
   }
 
-  ngAfterViewInit() {
-    this._loadLegend(this._route.snapshot.params.id);
+  ngOnInit() {
+    const item = this._getItem(this._route.snapshot.params.id);
+    this.item = item;
   }
 
-  private _loadLegend(id) {
-    const item = this._getItem(id);
+  ngAfterViewInit() {
+    this._setNativeApp(this.item);
+    this._loadLegend(this.item);
+  }
+
+  private _setNativeApp(item) {
+    if (item) {
+      this._jsBridge.setAppTitle(item.name);
+    }
+    this._jsBridge.controlAppBackButton(true);
+  }
+
+  private _loadLegend(item) {
     this._svgHotPoint.showLoading();
     if (item) {
       this._svgHotPoint.loadSVG(item.imgSrc);
