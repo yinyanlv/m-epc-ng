@@ -1,4 +1,4 @@
 <p>{{item.name}}</p>
 <div class="container">
-  <s-svg-hotpoint #svgHotPoint  (onLegedLoaded)="legendLoaded()" (onSelectionCallout)="selectCallout($event)" nopicPath="/assets/images/no_image.jpg"></s-svg-hotpoint>
+  <s-svg-hotpoint #svgHotPoint  (onLegedLoaded)="legendLoaded()" (onSelectionCallout)="selectCallout($event)" [nopicPath]="this.assetsPrefix + '/assets/images/no_image.jpg'"></s-svg-hotpoint>
 </div>

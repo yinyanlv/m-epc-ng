@@ -17,16 +17,21 @@ export class JsBridgeService {
     if (this._jsBridge) {
       this._jsBridge.isShowBackButton(isShow);
     }
+    if (window['webkit'] && window['webkit']['messageHandlers']) {
+      window['webkit']['messageHandlers'].isShowBackButton.postMessage(isShow);
+    }
   }
 
   setAppTitle(title: string = '') {
     if (this._jsBridge) {
       this._jsBridge.setWebPageTitle(title);
     }
+    if (window['webkit'] && window['webkit']['messageHandlers']) {
+      window['webkit']['messageHandlers'].setWebPageTitle.postMessage(title);
+    }
   }
 
   _initJsInterface() {
-
     window['clickedBackButton'] = () => {
       this._location.back();
     };

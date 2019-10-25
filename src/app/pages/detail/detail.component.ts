@@ -1,6 +1,7 @@
 import {Component, OnInit, AfterViewInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
+import {environment} from '../../../environments/environment';
 import {JsBridgeService} from '../../services/js-bridge.service';
 import {list} from '../../../../mock/list';
 import {SvgHotpointComponent} from '../../components/svg-hotpoint/svg-hotpoint.component';
@@ -16,6 +17,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
   private _svgHotPoint: SvgHotpointComponent;
 
   public item: any;
+  public assetsPrefix: string = environment.assetsPrefix;
 
   constructor(
     private _route: ActivatedRoute,
@@ -43,9 +45,9 @@ export class DetailComponent implements OnInit, AfterViewInit {
   private _loadLegend(item) {
     this._svgHotPoint.showLoading();
     if (item) {
-      this._svgHotPoint.loadSVG(item.imgSrc);
+      this._svgHotPoint.loadSVG(this.assetsPrefix + item.imgSrc);
     } else {
-      this._svgHotPoint.loadSVG('/assets/images/no_image.jpg');
+      this._svgHotPoint.loadSVG(this.assetsPrefix + '/assets/images/no_image.jpg');
     }
   }
 
